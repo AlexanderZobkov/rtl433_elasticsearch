@@ -1,0 +1,32 @@
+version: '2.1'
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash-oss:6.3.0
+    ports:
+      - "1514:1514/udp"
+    volumes:
+      - "./rtl433_syslog_to_elasticsearch.conf:/usr/share/logstash/pipeline/rtl433_syslog_to_elasticsearch.conf"
+    depends_on:
+      - elasticsearch
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.3.0
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es_rtl433_data:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.3.0
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch 
+
+volumes:
+   es_rtl433_data:
+      driver: local
