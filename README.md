@@ -12,7 +12,7 @@ docker-compose up
 
 4. Visualize data
 
-For example temperature from a termometer sensor with timelion
+For example temperature from a temperature sensor with timelion
 ```
 .es(index=rtl_433-*,metric="avg:rtl_433.temperature_C"), .es(index=rtl_433-*,metric="avg:rtl_433.temperature_C").trend(mode=liner)
 ```
