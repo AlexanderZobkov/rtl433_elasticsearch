@@ -5,5 +5,4 @@ services:
     devices:
         - /dev/bus/usb 
     privileged: true
-    restart: on-failure
     command: ["-G", "-F", "syslog:${SYSLOG_HOST:-127.0.0.1}:${SYSLOG_PORT:-1514}"]

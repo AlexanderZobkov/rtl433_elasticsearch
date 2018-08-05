@@ -5,13 +5,15 @@ WORKDIR /tmp
 ENV commit_id HEAD
 
 RUN apt-get update && apt-get install -y \
- rtl-sdr \
- librtlsdr-dev \
- librtlsdr0 \
- git \
- automake \
- libtool \
- cmake 
+	git \
+	libtool \
+	libusb-1.0.0-dev \
+	librtlsdr-dev \
+	rtl-sdr \
+	build-essential \
+	autoconf \
+	cmake \
+	pkg-config
 
 RUN git clone https://github.com/merbanan/rtl_433.git && \
     cd rtl_433 && \
@@ -20,10 +22,7 @@ RUN git clone https://github.com/merbanan/rtl_433.git && \
     cd build && \
     cmake ../ && \
     make && \
-    make install && \
-    cd / && \
-    rm -rf /tmp/rtl_433
-
+    make install
 
 WORKDIR /
 
